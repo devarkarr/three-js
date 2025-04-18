@@ -1,6 +1,6 @@
 import "./style.css";
 import * as THREE from "three";
-
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 // initial scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color("#f0f0f0");
@@ -26,12 +26,21 @@ camera.position.z = 5;
 // renderer
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setAnimationLoop(animate);
+// renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 
+// control
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.autoRotate = true;
+controls.enableZoom = true;
 // animate
+
 function animate() {
+  requestAnimationFrame(animate);
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
+  controls.update();
   renderer.render(scene, camera);
 }
+animate();
