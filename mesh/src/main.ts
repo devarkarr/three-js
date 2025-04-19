@@ -11,14 +11,31 @@ const material = new THREE.MeshLambertMaterial({
   color: new THREE.Color("#00FF00").convertSRGBToLinear(), // Green
   emissive: new THREE.Color("#FF0000").convertSRGBToLinear(), // Red
 });
+
 const cube = new THREE.Mesh(geometry, material);
 cube.castShadow = true;
 cube.scale.setScalar(1.1);
 // vector
-const tempVector = new THREE.Vector3(0, 1, -1);
+const tempVector = new THREE.Vector3(0, 1, -3);
 cube.position.copy(tempVector);
 
-scene.add(cube);
+const cube2 = new THREE.Mesh(geometry, material);
+cube2.castShadow = true;
+cube2.scale.setScalar(0.8);
+
+const cube3 = new THREE.Mesh(geometry, material);
+cube3.castShadow = true;
+cube3.scale.setScalar(1.1);
+cube3.position.x = 3;
+cube3.position.y = 1;
+
+// group
+const group = new THREE.Group();
+group.add(cube);
+group.add(cube2);
+group.add(cube3);
+group.position.set(0, 1, 0);
+scene.add(group);
 
 const plane = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
@@ -86,6 +103,12 @@ function animate() {
   requestAnimationFrame(animate);
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
+
+  cube2.rotation.x += 0.01;
+  cube2.rotation.y += 0.01;
+
+  cube3.rotation.x += 0.01;
+  cube3.rotation.y += 0.01;
   controls.update();
   renderer.render(scene, camera);
 }
