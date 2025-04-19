@@ -13,7 +13,7 @@ const material = new THREE.MeshLambertMaterial({
 });
 const cube = new THREE.Mesh(geometry, material);
 cube.castShadow = true;
-
+cube.scale.setScalar(1.1);
 // vector
 const tempVector = new THREE.Vector3(0, 1, -1);
 cube.position.copy(tempVector);
