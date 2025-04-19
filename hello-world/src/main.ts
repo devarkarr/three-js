@@ -46,17 +46,21 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 5;
 
 // renderer
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+});
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(window.innerWidth, window.innerHeight);
+// antialiasing problem solution
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 // renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 
 // control
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-controls.autoRotate = true;
+// controls.autoRotate = true;
 controls.enableZoom = true;
 
 // resize
