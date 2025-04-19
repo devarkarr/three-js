@@ -13,8 +13,11 @@ const material = new THREE.MeshLambertMaterial({
 });
 const cube = new THREE.Mesh(geometry, material);
 cube.castShadow = true;
-cube.position.y = 1;
-cube.position.z = -1;
+
+// vector
+const tempVector = new THREE.Vector3(0, 1, -1);
+cube.position.copy(tempVector);
+
 scene.add(cube);
 
 const plane = new THREE.Mesh(
@@ -50,6 +53,8 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 camera.position.z = 5;
+
+console.log(tempVector.distanceTo(camera.position));
 
 // renderer
 const renderer = new THREE.WebGLRenderer({
