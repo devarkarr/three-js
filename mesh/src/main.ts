@@ -10,11 +10,14 @@ const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshLambertMaterial({
   color: new THREE.Color("#00FF00").convertSRGBToLinear(), // Green
   emissive: new THREE.Color("#FF0000").convertSRGBToLinear(), // Red
+  wireframe: true,
 });
 
 const cube = new THREE.Mesh(geometry, material);
 cube.castShadow = true;
 cube.scale.setScalar(1.1);
+// rotation
+cube.rotation.x = THREE.MathUtils.degToRad(45);
 // vector
 const tempVector = new THREE.Vector3(0, 1, -3);
 cube.position.copy(tempVector);
@@ -39,7 +42,7 @@ scene.add(group);
 
 const plane = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshStandardMaterial({ color: 0xcccccc })
+  new THREE.MeshStandardMaterial({ color: "white" })
 );
 plane.rotation.x = -Math.PI / 2;
 plane.position.y = -1;
@@ -98,18 +101,28 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// initialize clock
+const clock = new THREE.Clock();
+let previousTime = 0;
+
 // animate
 function animate() {
-  requestAnimationFrame(animate);
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  const currentTime = clock.getElapsedTime();
+  const delta = currentTime - previousTime;
+  previousTime = currentTime;
 
-  cube2.rotation.x += 0.01;
-  cube2.rotation.y += 0.01;
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.01;
 
-  cube3.rotation.x += 0.01;
-  cube3.rotation.y += 0.01;
+  cube2.rotation.y += THREE.MathUtils.degToRad(1) * delta * 20;
+
+  Math.sin(currentTime);
+  cube2.scale.x += Math.sin(currentTime) + 1;
+
+  // cube3.rotation.x += 0.01;
+  // cube3.rotation.y += 0.01;
   controls.update();
   renderer.render(scene, camera);
+  requestAnimationFrame(animate);
 }
 animate();
