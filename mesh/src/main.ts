@@ -115,10 +115,8 @@ function animate() {
   // cube.rotation.y += 0.01;
 
   cube2.rotation.y += THREE.MathUtils.degToRad(1) * delta * 20;
-
-  Math.sin(currentTime);
-  cube2.scale.x += Math.sin(currentTime) + 1;
-
+  cube2.scale.x += Math.sin(currentTime) * 20 + 2;
+  cube2.position.x = Math.sin(currentTime) + 2;
   // cube3.rotation.x += 0.01;
   // cube3.rotation.y += 0.01;
   controls.update();
