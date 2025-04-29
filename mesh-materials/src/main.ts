@@ -38,7 +38,7 @@ const pane = new Pane();
 //   wireframe: true,
 // });
 
-const material = new THREE.MeshStandardMaterial();
+const material = new THREE.MeshPhysicalMaterial();
 material.color = new THREE.Color("#f60410");
 material.emissive = new THREE.Color("#000000");
 pane.addBinding(material, "roughness", {
@@ -47,6 +47,16 @@ pane.addBinding(material, "roughness", {
   step: 0.1,
 });
 pane.addBinding(material, "metalness", {
+  min: 0,
+  max: 1,
+  step: 0.1,
+});
+pane.addBinding(material, "clearcoat", {
+  min: 0,
+  max: 1,
+  step: 0.1,
+});
+pane.addBinding(material, "reflectivity", {
   min: 0,
   max: 1,
   step: 0.1,
