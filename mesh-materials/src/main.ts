@@ -5,7 +5,7 @@ import { Pane } from "tweakpane";
 
 // initial scene
 const scene = new THREE.Scene();
-// scene.background = new THREE.Color("#f0f0f0");
+scene.background = new THREE.Color("#f0f0f0");
 
 // add objects to scene
 const boxParameters = {
@@ -38,13 +38,18 @@ const pane = new Pane();
 //   wireframe: true,
 // });
 
-const material = new THREE.MeshPhongMaterial();
-material.shininess = 90;
-material.color = new THREE.Color("red");
-pane.addBinding(material, "shininess", {
+const material = new THREE.MeshStandardMaterial();
+material.color = new THREE.Color("#f60410");
+material.emissive = new THREE.Color("#000000");
+pane.addBinding(material, "roughness", {
   min: 0,
-  max: 100,
-  step: 1,
+  max: 1,
+  step: 0.1,
+});
+pane.addBinding(material, "metalness", {
+  min: 0,
+  max: 1,
+  step: 0.1,
 });
 
 // material.transparent = true;
@@ -69,11 +74,11 @@ scene.add(cube2);
 scene.add(plane);
 
 // initialize the light
-const light = new THREE.AmbientLight(0xffffff, 0.2);
+const light = new THREE.AmbientLight(0xffffff, 1);
 scene.add(light);
 
-const pointLight = new THREE.PointLight(0xffffff, 4);
-// pointLight.position.set(5, 5, 5);
+const pointLight = new THREE.PointLight(0xffffff, 7);
+pointLight.position.set(0.1, 0, 0);
 scene.add(pointLight);
 
 // camera
