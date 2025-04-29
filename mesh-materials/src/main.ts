@@ -31,29 +31,6 @@ const geometry = new THREE.BoxGeometry(
 
 // setup tweakpane
 const pane = new Pane();
-const folder = pane.addFolder({
-  title: "Title",
-  expanded: true,
-});
-
-// Helper function to update geometry
-const updateCubeGeometry = () => {
-  const { width, height, depth } = boxParameters;
-  cube.geometry.dispose(); // dispose old geometry (important to avoid memory leaks)
-  cube.geometry = new THREE.BoxGeometry(width, height, depth);
-};
-
-// Add bindings
-["width", "height", "depth"].forEach((dimension) => {
-  folder
-    .addBinding(boxParameters, dimension as "width" | "height" | "depth", {
-      min: 0.1,
-      max: 10,
-      step: 0.1,
-      label: dimension.charAt(0).toUpperCase() + dimension.slice(1),
-    })
-    .on("change", updateCubeGeometry);
-});
 
 // const material = new THREE.MeshLambertMaterial({
 //   color: new THREE.Color("#00FF00").convertSRGBToLinear(), // Green
@@ -61,25 +38,43 @@ const updateCubeGeometry = () => {
 //   wireframe: true,
 // });
 
-const material = new THREE.MeshBasicMaterial({
-  color: 0x00ff00,
+const material = new THREE.MeshPhongMaterial();
+material.shininess = 90;
+material.color = new THREE.Color("red");
+pane.addBinding(material, "shininess", {
+  min: 0,
+  max: 100,
+  step: 1,
 });
-material.transparent = true;
-material.opacity = 0.5;
-material.side = THREE.FrontSide;
+
+// material.transparent = true;
+// material.opacity = 0.5;
+// material.side = THREE.FrontSide;
 
 const cube = new THREE.Mesh(geometry, material);
 const cube2 = new THREE.Mesh(geometry, material);
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
+const plane = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(0.5, 0.15, 100, 16),
+  material
+);
 cube2.position.x = -2;
 plane.position.x = 2;
+cube.position.y = 2;
 // cube.scale.setScalar(2);
-scene.background = new THREE.Color(0xffffff);
+// scene.background = new THREE.Color(0xffffff);
 // fog
-scene.fog = new THREE.Fog(0xffffff, 1, 10);
+// scene.fog = new THREE.Fog(0xffffff, 1, 10);
 scene.add(cube);
 scene.add(cube2);
 scene.add(plane);
+
+// initialize the light
+const light = new THREE.AmbientLight(0xffffff, 0.2);
+scene.add(light);
+
+const pointLight = new THREE.PointLight(0xffffff, 4);
+// pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
 
 // camera
 const camera = new THREE.PerspectiveCamera(
