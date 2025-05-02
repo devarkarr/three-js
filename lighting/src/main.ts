@@ -61,25 +61,31 @@ scene.add(group);
 //   step: 0.1,
 // });
 
-const directionalLight = new THREE.DirectionalLight("white", 0.5);
-directionalLight.position.x = -5;
-directionalLight.position.z = 4;
+// const directionalLight = new THREE.DirectionalLight("white", 0.5);
+// directionalLight.position.x = -5;
+// directionalLight.position.z = 4;
 
-const directionalLightHelper = new THREE.DirectionalLightHelper(
-  directionalLight
-);
-scene.add(directionalLightHelper);
-scene.add(directionalLight);
+// const directionalLightHelper = new THREE.DirectionalLightHelper(
+//   directionalLight
+// );
+// scene.add(directionalLightHelper);
+// scene.add(directionalLight);
 
-pane.addBinding(directionalLight, "color", {
-  color: { type: "float" },
-});
-pane.addBinding(directionalLight, "intensity", {
-  min: 0,
-  max: 1,
-  step: 0.1,
-});
+// pane.addBinding(directionalLight, "color", {
+//   color: { type: "float" },
+// });
+// pane.addBinding(directionalLight, "intensity", {
+//   min: 0,
+//   max: 1,
+//   step: 0.1,
+// });
 
+const pointLight = new THREE.PointLight("white", 0.5, 0, 0.01);
+pointLight.position.x = 3;
+pointLight.position.y = 3;
+const pointHelper = new THREE.PointLightHelper(pointLight, 0.5);
+scene.add(pointHelper);
+scene.add(pointLight);
 // scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 // const pointLight = new THREE.PointLight(0xffffff, 100);
 // pointLight.position.set(4, 4, 2);
