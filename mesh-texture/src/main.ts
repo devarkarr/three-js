@@ -5,7 +5,7 @@ import { Pane } from "tweakpane";
 
 // initial scene
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("#f0f0f0");
+scene.background = new THREE.Color("#000000");
 
 // add objects to scene
 const boxParameters = {
@@ -24,6 +24,8 @@ const geometry = new THREE.BoxGeometry(
 
 const boxGeometry = new THREE.SphereGeometry(10.034, 64, 31);
 const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+
 // const geometry = new THREE.CapsuleGeometry(8.6, 1, 4, 8);
 // const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
 
@@ -45,30 +47,45 @@ const pane = new Pane();
 const textureLoader = new THREE.TextureLoader();
 
 // initialize texture
-const texture = textureLoader.load("/oily-tubework-bl/oily-tubework_ao.png");
-texture.repeat.set(10, 10);
-texture.wrapS = THREE.RepeatWrapping;
-texture.wrapT = THREE.RepeatWrapping;
-texture.offset.x = 10;
+const texture = textureLoader.load(
+  "/whispy-grass-meadow-bl/wispy-grass-meadow_albedo.png"
+);
+const textureRoughnessMap = textureLoader.load(
+  "/whispy-grass-meadow-bl/wispy-grass-meadow_roughness.png"
+);
+const textureMetalnessMap = textureLoader.load(
+  "/whispy-grass-meadow-bl/wispy-grass-meadow_metallic.png"
+);
+const textureNormalMap = textureLoader.load(
+  "/whispy-grass-meadow-bl/wispy-grass-meadow_normal-ogl.png"
+);
+const textureHeight = textureLoader.load(
+  "/whispy-grass-meadow-bl/wispy-grass-meadow_height.png"
+);
+const textureAo = textureLoader.load(
+  "/whispy-grass-meadow-bl/wispy-grass-meadow_ao.png"
+);
+// texture.repeat.set(1, 1);
+// texture.wrapS = THREE.RepeatWrapping;
+// texture.wrapT = THREE.RepeatWrapping;
+// texture.offset.x = 10;
 // texture.wrapS = THREE.MirroredRepeatWrapping;
 // texture.wrapT = THREE.MirroredRepeatWrapping;
 
-const material = new THREE.MeshPhysicalMaterial();
-// material.map = texture;
+const material = new THREE.MeshStandardMaterial();
+material.roughness = 1;
+material.map = texture;
+material.roughnessMap = textureRoughnessMap;
+material.metalnessMap = textureMetalnessMap;
+material.metalness = 1;
+material.normalMap = textureNormalMap;
+material.displacementMap = textureHeight;
+material.displacementScale = 0.1;
+material.aoMap = textureAo;
+material.aoMapIntensity = 1;
 // material.color = new THREE.Color("#f60410");
 // material.emissive = new THREE.Color("#000000");
-pane.addBinding(texture, "offset", {
-  x: {
-    min: -1,
-    max: 1,
-    step: 0.001,
-  },
-  y: {
-    min: -1,
-    max: 1,
-    step: 0.001,
-  },
-});
+
 // pane.addBinding(material, "roughness", {
 //   min: 0,
 //   max: 1,
@@ -98,6 +115,7 @@ const plane2 = new THREE.Mesh(
   new THREE.PlaneGeometry(1, 1),
   new THREE.MeshPhysicalMaterial({ map: texture })
 );
+const circle = new THREE.Mesh(sphereGeometry, material);
 const cube = new THREE.Mesh(geometry, material);
 // const box = new THREE.Mesh(boxGeometry, boxMaterial);
 const cube2 = new THREE.Mesh(geometry, material);
@@ -107,7 +125,7 @@ const plane = new THREE.Mesh(
 );
 cube2.position.x = -2;
 plane.position.x = 2;
-// plane2.position.y = -2;
+plane2.position.y = -2;
 plane2.rotation.x = -Math.PI * 0.55;
 cube.position.y = 2;
 // cube.scale.setScalar(2);
@@ -117,26 +135,27 @@ cube.position.y = 2;
 scene.add(cube);
 scene.add(cube2);
 scene.add(plane);
+scene.add(circle);
 // scene.add(box);
 scene.add(plane2);
 
 // initialize the light
-const light = new THREE.AmbientLight(0xffffff, 1);
+const light = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(light);
 
-const pointLight = new THREE.PointLight(0xffffff, 7);
-pointLight.position.set(0.1, 0, 0);
+const pointLight = new THREE.PointLight(0xffffff, 5);
+pointLight.position.set(2, 1.7, 2);
 scene.add(pointLight);
 
 // camera
 const camera = new THREE.PerspectiveCamera(
-  1,
+  75,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-camera.position.z = 10;
-camera.position.y = 5;
+camera.position.z = 5;
+// camera.position.y = 5;
 
 // renderer
 const renderer = new THREE.WebGLRenderer({
@@ -163,7 +182,7 @@ window.addEventListener("resize", () => {
 
 // animate
 function animate() {
-  texture.offset.x -= 0.01;
+  // texture.offset.x -= 0.01;
   controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
