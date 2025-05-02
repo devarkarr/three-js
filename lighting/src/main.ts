@@ -54,13 +54,32 @@ mesh6.position.z = 1.5;
 group.add(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, receiveBg);
 scene.add(group);
 
-const hemisphereLight = new THREE.HemisphereLight("red", "blue", 0.5);
-scene.add(hemisphereLight);
-pane.addBinding(hemisphereLight, "intensity", {
+// const hemisphereLight = new THREE.HemisphereLight("red", "blue", 0.5);
+// pane.addBinding(hemisphereLight, "intensity", {
+//   min: 0,
+//   max: 1,
+//   step: 0.1,
+// });
+
+const directionalLight = new THREE.DirectionalLight("white", 0.5);
+directionalLight.position.x = -5;
+directionalLight.position.z = 4;
+
+const directionalLightHelper = new THREE.DirectionalLightHelper(
+  directionalLight
+);
+scene.add(directionalLightHelper);
+scene.add(directionalLight);
+
+pane.addBinding(directionalLight, "color", {
+  color: { type: "float" },
+});
+pane.addBinding(directionalLight, "intensity", {
   min: 0,
   max: 1,
   step: 0.1,
 });
+
 // scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 // const pointLight = new THREE.PointLight(0xffffff, 100);
 // pointLight.position.set(4, 4, 2);
