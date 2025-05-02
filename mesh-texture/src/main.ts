@@ -49,6 +49,7 @@ const texture = textureLoader.load("/oily-tubework-bl/oily-tubework_ao.png");
 texture.repeat.set(10, 10);
 texture.wrapS = THREE.RepeatWrapping;
 texture.wrapT = THREE.RepeatWrapping;
+texture.offset.x = 10;
 // texture.wrapS = THREE.MirroredRepeatWrapping;
 // texture.wrapT = THREE.MirroredRepeatWrapping;
 
@@ -56,26 +57,38 @@ const material = new THREE.MeshPhysicalMaterial();
 // material.map = texture;
 // material.color = new THREE.Color("#f60410");
 // material.emissive = new THREE.Color("#000000");
-pane.addBinding(material, "roughness", {
-  min: 0,
-  max: 1,
-  step: 0.1,
+pane.addBinding(texture, "offset", {
+  x: {
+    min: -1,
+    max: 1,
+    step: 0.001,
+  },
+  y: {
+    min: -1,
+    max: 1,
+    step: 0.001,
+  },
 });
-pane.addBinding(material, "metalness", {
-  min: 0,
-  max: 1,
-  step: 0.1,
-});
-pane.addBinding(material, "clearcoat", {
-  min: 0,
-  max: 1,
-  step: 0.1,
-});
-pane.addBinding(material, "reflectivity", {
-  min: 0,
-  max: 1,
-  step: 0.1,
-});
+// pane.addBinding(material, "roughness", {
+//   min: 0,
+//   max: 1,
+//   step: 0.1,
+// });
+// pane.addBinding(material, "metalness", {
+//   min: 0,
+//   max: 1,
+//   step: 0.1,
+// });
+// pane.addBinding(material, "clearcoat", {
+//   min: 0,
+//   max: 1,
+//   step: 0.1,
+// });
+// pane.addBinding(material, "reflectivity", {
+//   min: 0,
+//   max: 1,
+//   step: 0.1,
+// });
 
 // material.transparent = true;
 // material.opacity = 0.5;
@@ -150,6 +163,7 @@ window.addEventListener("resize", () => {
 
 // animate
 function animate() {
+  texture.offset.x -= 0.01;
   controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
