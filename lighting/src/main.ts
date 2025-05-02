@@ -1,6 +1,7 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { RectAreaLightHelper } from "three/addons/helpers/RectAreaLightHelper.js";
 import { Pane } from "tweakpane";
 
 const scene = new THREE.Scene();
@@ -87,39 +88,55 @@ scene.add(group);
 // scene.add(pointHelper);
 // scene.add(pointLight);
 
-const spotLight = new THREE.SpotLight("white", 0.5);
-spotLight.position.set(2, 2, 2);
+// const spotLight = new THREE.SpotLight("white", 0.5);
+// spotLight.position.set(2, 2, 2);
 
-const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-scene.add(spotLightHelper);
-scene.add(spotLight);
-pane.addBinding(spotLight, "angle", {
-  min: 0,
-  max: Math.PI / 2,
-  step: 0.01,
+// const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+// scene.add(spotLightHelper);
+// scene.add(spotLight);
+// pane.addBinding(spotLight, "angle", {
+//   min: 0,
+//   max: Math.PI / 2,
+//   step: 0.01,
+// });
+// pane.addBinding(spotLight, "penumbra", {
+//   min: 0,
+//   max: 1,
+//   step: 0.01,
+// });
+// pane.addBinding(spotLight, "decay", {
+//   min: 0,
+//   max: 1,
+//   step: 0.01,
+// });
+// pane.addBinding(spotLight, "distance", {
+//   min: 0,
+//   max: 10,
+//   step: 0.01,
+// });
+// pane.addBinding(spotLight, "color", {
+//   color: { type: "float" },
+// });
+// pane.addBinding(spotLight, "intensity", {
+//   min: 0,
+//   max: 1,
+//   step: 0.1,
+// });
+
+const rectLight = new THREE.RectAreaLight("white", 0.5, 50, 2);
+rectLight.position.y = 6;
+rectLight.position.z = 6;
+
+const rectLightHelper = new RectAreaLightHelper(rectLight, 0.5);
+scene.add(rectLightHelper);
+scene.add(rectLight);
+pane.addBinding(rectLight, "color", {
+  color: { type: "float" },
 });
-pane.addBinding(spotLight, "penumbra", {
-  min: 0,
-  max: 1,
-  step: 0.01,
-});
-pane.addBinding(spotLight, "decay", {
-  min: 0,
-  max: 1,
-  step: 0.01,
-});
-pane.addBinding(spotLight, "distance", {
+pane.addBinding(rectLight, "intensity", {
   min: 0,
   max: 10,
   step: 0.01,
-});
-pane.addBinding(spotLight, "color", {
-  color: { type: "float" },
-});
-pane.addBinding(spotLight, "intensity", {
-  min: 0,
-  max: 1,
-  step: 0.1,
 });
 // scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 // const pointLight = new THREE.PointLight(0xffffff, 100);
