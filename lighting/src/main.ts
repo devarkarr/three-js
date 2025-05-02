@@ -80,12 +80,47 @@ scene.add(group);
 //   step: 0.1,
 // });
 
-const pointLight = new THREE.PointLight("white", 0.5, 0, 0.01);
-pointLight.position.x = 3;
-pointLight.position.y = 3;
-const pointHelper = new THREE.PointLightHelper(pointLight, 0.5);
-scene.add(pointHelper);
-scene.add(pointLight);
+// const pointLight = new THREE.PointLight("white", 0.5, 0, 0.01);
+// pointLight.position.x = 3;
+// pointLight.position.y = 3;
+// const pointHelper = new THREE.PointLightHelper(pointLight, 0.5);
+// scene.add(pointHelper);
+// scene.add(pointLight);
+
+const spotLight = new THREE.SpotLight("white", 0.5);
+spotLight.position.set(2, 2, 2);
+
+const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+scene.add(spotLightHelper);
+scene.add(spotLight);
+pane.addBinding(spotLight, "angle", {
+  min: 0,
+  max: Math.PI / 2,
+  step: 0.01,
+});
+pane.addBinding(spotLight, "penumbra", {
+  min: 0,
+  max: 1,
+  step: 0.01,
+});
+pane.addBinding(spotLight, "decay", {
+  min: 0,
+  max: 1,
+  step: 0.01,
+});
+pane.addBinding(spotLight, "distance", {
+  min: 0,
+  max: 10,
+  step: 0.01,
+});
+pane.addBinding(spotLight, "color", {
+  color: { type: "float" },
+});
+pane.addBinding(spotLight, "intensity", {
+  min: 0,
+  max: 1,
+  step: 0.1,
+});
 // scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 // const pointLight = new THREE.PointLight(0xffffff, 100);
 // pointLight.position.set(4, 4, 2);
