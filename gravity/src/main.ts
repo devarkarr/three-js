@@ -22,14 +22,25 @@ const scene = new THREE.Scene();
 // const pane = new Pane();
 
 const textureLoader = new THREE.TextureLoader();
-
+const gravityLoader = new THREE.CubeTextureLoader().setPath(
+  "/Standard-Cube-Map/"
+);
 const sunTexture = textureLoader.load("2k_sun.jpg");
 const earthTexture = textureLoader.load("/2k_earth_daymap.jpg");
 const moonTexture = textureLoader.load("/2k_moon.jpg");
 const venusTexture = textureLoader.load("/2k_venus_surface.jpg");
 const marsTexture = textureLoader.load("/2k_mars.jpg");
 const jupiterTexture = textureLoader.load("/2k_jupiter.jpg");
-const gravityTexture = textureLoader.load("/8k_stars_milky_way.jpg");
+
+const gravityTexture = gravityLoader.load([
+  "px.png",
+  "nx.png",
+  "py.png",
+  "ny.png",
+  "pz.png",
+  "nz.png",
+]);
+console.log(gravityLoader);
 scene.background = gravityTexture;
 const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 const sunMaterial = new THREE.MeshStandardMaterial({
