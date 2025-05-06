@@ -3,6 +3,7 @@ import Camera from "./camera";
 import Render from "./render";
 import Loop from "./loop";
 import World from "./world";
+import Resize from "./resize";
 
 let instance: App | null = null;
 
@@ -13,6 +14,8 @@ class App {
   renderer!: Render;
   loop!: Loop;
   world!: World;
+  resize!: Resize;
+
   constructor() {
     if (instance) return instance;
     instance = this;
@@ -21,6 +24,7 @@ class App {
     this.world = new World();
     this.camera = new Camera();
     this.renderer = new Render();
+    this.resize = new Resize();
     this.loop = new Loop();
   }
 }
