@@ -21,6 +21,7 @@ class Render {
     this.instance = new THREE.WebGLRenderer({ antialias: true });
     this.instance.setSize(window.innerWidth, window.innerHeight);
     this.instance.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.canvas.appendChild(this.instance.domElement);
   }
 
   loop() {
