@@ -1,4 +1,4 @@
+import App from "./app";
 import "./style.css";
-import World from "./world";
 
-new World();
+new App();
