@@ -37,6 +37,11 @@ const assertToStore = [
     type: "gltf",
     path: "/boombox/BoomBox.gltf",
   },
+  {
+    id: "Car",
+    type: "gltf",
+    path: "/realistic_animated_guinea_fowl__game_ready/scene.gltf",
+  },
 ];
 
 export interface AssertStoreSlice {
