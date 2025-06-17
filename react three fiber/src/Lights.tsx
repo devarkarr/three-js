@@ -1,4 +1,6 @@
 import { useHelper } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
+import { button, useControls } from "leva";
 import { useRef } from "react";
 import * as THREE from "three";
 
@@ -28,6 +30,18 @@ export default function Lights() {
     "red"
   );
 
+  const { camera } = useThree();
+
+  const updateFov = (fov: number) => {
+    camera.fov = fov;
+    camera.updateProjectionMatrix();
+  };
+  useControls("FOV", {
+    smallFov: button(() => updateFov(20)),
+    normalFov: button(() => updateFov(40)),
+    largeFov: button(() => updateFov(80)),
+  });
+
   return (
     <>
       <ambientLight intensity={0} color={"green"} />
@@ -54,7 +68,6 @@ export default function Lights() {
         position={[-3, 2, -3]}
       /> */}
       <spotLight
-        ref={spotLight}
         args={["#FF6500", 5, 0, 0.5, 1, 0.01]}
         castShadow
         position={[3, 2, 3]}
