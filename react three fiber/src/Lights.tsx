@@ -31,7 +31,7 @@ export default function Lights() {
   return (
     <>
       <ambientLight intensity={0} color={"green"} />
-      <directionalLight
+      {/* <directionalLight
         ref={dirLight}
         args={["#F7374F", 1]}
         castShadow
@@ -52,12 +52,18 @@ export default function Lights() {
         ref={hemiLight}
         castShadow
         position={[-3, 2, -3]}
-      />
+      /> */}
       <spotLight
         ref={spotLight}
         args={["#FF6500", 5, 0, 0.5, 1, 0.01]}
         castShadow
         position={[3, 2, 3]}
+        shadow-camera-near={3}
+        shadow-camera-far={10}
+        shadow-camera-left={-10}
+        shadow-camera-right={10}
+        shadow-camera-top={10}
+        shadow-camera-bottom={-10}
       />
     </>
   );
