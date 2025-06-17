@@ -1,32 +1,63 @@
+import { useHelper } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 
 export default function Lights() {
-  const lightRef = useRef<THREE.PointLight>(null);
+  const dirLight = useRef<THREE.DirectionalLight | null>(null);
+  const pointLight = useRef<THREE.PointLight | null>(null);
+  const hemiLight = useRef<THREE.HemisphereLight | null>(null);
+  const spotLight = useRef<THREE.SpotLight | null>(null);
+  useHelper(
+    dirLight as React.RefObject<THREE.Object3D>,
+    THREE.DirectionalLightHelper,
+    1
+  );
+  useHelper(
+    pointLight as React.RefObject<THREE.Object3D>,
+    THREE.PointLightHelper,
+    1
+  );
+  useHelper(
+    hemiLight as React.RefObject<THREE.Object3D>,
+    THREE.HemisphereLightHelper,
+    1
+  );
+  useHelper(
+    spotLight as React.RefObject<THREE.Object3D>,
+    THREE.SpotLightHelper,
+    "red"
+  );
 
-  // Must be inside a Canvas-rendered component
   return (
     <>
-      <pointLight
-        ref={lightRef}
-        position={[0, 2, 0]}
-        // angle={0.4}
-        // penumbra={0.5}
-        color="white"
-        intensity={1}
-        // distance={10}
-        decay={0.01}
+      <ambientLight intensity={0} color={"green"} />
+      <directionalLight
+        ref={dirLight}
+        args={["#F7374F", 1]}
         castShadow
+        position={[1, 2, 3]}
+      />
+      <pointLight
+        ref={pointLight}
+        position={[7, 2, 0]}
+        args={["orange", 3, 0, 0.01]}
+      />
+      <pointLight
+        castShadow
+        position={[-7, 2, 0]}
+        args={["#0065F8", 1, 0, 0.01]}
+      />
+      <hemisphereLight
+        args={["#FFEB00", "green", 1]}
+        ref={hemiLight}
+        castShadow
+        position={[-3, 2, -3]}
       />
       <spotLight
-        position={[3, 2, -3]}
-        angle={0.4}
-        penumbra={0.5}
-        color="#a400ea"
-        intensity={1}
-        // distance={10}
-        decay={0.01}
+        ref={spotLight}
+        args={["#FF6500", 5, 0, 0.5, 1, 0.01]}
         castShadow
+        position={[3, 2, 3]}
       />
     </>
   );
