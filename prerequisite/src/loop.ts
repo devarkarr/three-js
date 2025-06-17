@@ -1,7 +1,6 @@
 import App from "./app";
 import Camera from "./camera";
 import Render from "./render";
-import World from "./world";
 
 class Loop {
   app!: App;
