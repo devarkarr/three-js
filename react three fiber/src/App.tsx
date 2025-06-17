@@ -1,24 +1,22 @@
 // App.tsx
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import Ground from "./Ground";
-import Car from "./Car";
-import Lights from "./Lights";
+import { OrbitControls } from "@react-three/drei";
 
 export default function App() {
   return (
     <Canvas
-      camera={{ position: [2, 2, 4], fov: 50 }}
+      camera={{ position: [2, 2, 3] }}
       shadows
-      style={{ height: "100dvh", width: "100%", backgroundColor: "black" }}
+      style={{ height: "100dvh", width: "100%" }}
     >
       <Suspense fallback={null}>
-        <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
-        <ambientLight intensity={0.3} />
-        <Lights />
-        <Car />
-        <Ground />
+        <mesh position={[0, 1, -2]} rotation={[1, 2, 5]}>
+          <boxGeometry />
+          <meshNormalMaterial />
+        </mesh>
+        <axesHelper args={[5]} />
+
         <OrbitControls />
       </Suspense>
     </Canvas>
